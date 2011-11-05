@@ -1,0 +1,114 @@
+<html>
+<head>
+<script>
+
+var lastpointX = 0;
+var lastpointY;
+var segmentY;
+var segmentX;
+var zero;
+var prev_line_drawn = 1;
+
+
+var valY = 20;
+window.onload=function(){
+var string ="1,2,4,,6,10,35,35,35,35,35,35,50,30,20,30,35,55,45,65,40,30,20,10,-2,-5,-6,4,-5,-8,-10";
+        var splitted = string.split(","); 
+	var canvas=document.getElementById("myCanvas");
+	var context=canvas.getContext("2d");
+
+	canvas.width  = window.innerWidth;
+	canvas.height = window.innerHeight;
+
+
+	var maxY =150;
+	var minY = -150;
+	var numvaluesY = splitted.length;			
+
+
+	rangeY = Math.abs(maxY)+Math.abs(minY);
+	segmentY = canvas.height/rangeY;
+	zero = canvas.height/2;	
+
+	var timeline = 2*3600;
+	var interval = 20 ;  // in seconds
+	var numpointsX = timeline/interval;
+	 segmentX = canvas.width/numpointsX;
+
+
+	var prevpoint=zero;
+	var prevx=segmentX;
+	var endY =0;
+	context.moveTo(0,zero);
+
+	for (var i=0;i<numvaluesY;i++){	
+		var valY = splitted[i];	
+		endY = zero - (valY * segmentY);
+		context.lineTo(prevx,endY);
+		context.strokeStyle="green";
+		//context.lineWidth = 3 ;
+		context.stroke();
+		context.moveTo(prevx,endY);
+		prevx+=segmentX;
+	}
+	lastpointX = prevx-segmentX;
+	lastpointY = endY;
+	
+	setInterval(function(){updateCanvas()},10000);
+		
+}
+
+function drawSlowline(startX,endX,segmentX,startY,endY,segmentY,dir){
+ 	if( dir == 1 && endY >= startY)
+		return;
+	if(dir == -1 && endY <=startY)
+		return;
+	if(!dir && startX >= endX)
+ 		return;
+
+	var canvas=document.getElementById("myCanvas");
+	var context=canvas.getContext("2d");
+	context.moveTo(startX,startY);
+	startX += segmentX;
+	startY += segmentY;
+	if(startX >=0 && startY >=0){
+		context.lineTo(startX,startY);
+		context.strokeStyle="red";
+		context.stroke();
+	}
+	setTimeout(function(){drawSlowline(startX,endX,segmentX,startY,endY,segmentY)},8);				
+}
+
+function updateCanvas(){
+	valY +=10;
+	var delay = 1000;
+	var endX = lastpointX + segmentX;
+	var endY = zero - (valY*segmentY);
+	var segY =(endY - lastpointY)/delay;
+	var segX = segmentX/delay;
+	var dir = 0;
+
+	if(endY < lastpointY )
+		dir = 1;
+	else if(endY > lastpointY)
+		dir = -1;
+	if(prev_line_drawn){
+		prev_line_drawn =0;
+		drawSlowline(lastpointX,endX,segX,lastpointY,endY,segY,dir);
+		prev_line_drawn =1;	
+	}	
+	lastpointX=endX;
+	lastpointY=endY;	
+	
+}
+</script>
+</head>
+<body>
+  <canvas id="myCanvas" style="border: 1px solid #000000; background-color: black;" width="1000" height="500"></canvas>
+  <input type ="button" value = "kill" onclick="updateCanvas()">
+</body>
+</html>
+
+
+
+

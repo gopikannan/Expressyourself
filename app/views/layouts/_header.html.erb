@@ -1,0 +1,16 @@
+<div class = "header">
+<nav>
+  <ul>
+              <% if signed_in? %>
+                      <li><%=button_to current_user.name, current_user, :class => 'menu_button', :size => current_user.name.length * 10 , :method => :get%></li>
+              <% else %>
+                      <li><%= link_to image_tag('fb_logo.png', :size => '70x50'), "/auth/facebook"%></li>
+              <% end %>
+
+              <li>|</li>
+
+              <li><%= button_to "World", root_path, :class => 'menu_button'%></li>
+
+      </ul>
+      </nav>
+</div>

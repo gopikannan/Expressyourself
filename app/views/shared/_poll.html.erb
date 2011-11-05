@@ -1,0 +1,5 @@
+<% if @poll_items.any? %>
+        <table class="polls">
+                <%= render :partial => 'shared/poll_item', :collection => @poll_items %>
+        </table>
+<% end %>

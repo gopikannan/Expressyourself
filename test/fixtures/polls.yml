@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  question: MyString
+  option1: MyString
+  option2: MyString
+  status: 1
+
+two:
+  user_id: 1
+  question: MyString
+  option1: MyString
+  option2: MyString
+  status: 1

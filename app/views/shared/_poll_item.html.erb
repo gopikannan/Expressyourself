@@ -1,0 +1,27 @@
+<script type="text/javascript" src="jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="jquery.easing-1.4.pack.js"></script>
+<link rel="stylesheet" href="jquery.fancybox-1.3.4.css" type="text/css" media="screen" />
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+     $("a.poll_link").fancybox({
+           'width'    :  '95%',
+           'height'   :   '95%',
+           'hideOnContentClick': false, 
+           'type':'iframe'
+      }); 
+
+         });
+</script>
+
+
+<tr>
+        <td class="poll">
+                <span ><%= link_to poll_item.user.name, poll_item.user %></span>
+                <span class="content"><%= link_to poll_item.question, poll_item ,:class=>"poll_link"%></span>
+                <span class="content"><%= poll_item.option1 %></span>
+                <span class="content"><%= poll_item.option2 %></span>
+                <span class="timestamp">Posted <%= time_ago_in_words(poll_item.created_at) %> ago. </span>
+         </td>
+</tr>

@@ -1,0 +1,93 @@
+.container {
+  position:relative;
+  width: 100%;
+  font-family:Verdana,sans-serif;
+  border:1px solid #4d4128;
+  top-border:none;
+}
+
+body {
+  background: #fff;
+}
+
+.menu {
+        position: relative;
+        right: 0px;
+}
+
+.menu nav {
+  float:right;
+}
+
+nav ul li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+nav ul li a {
+  font-weight: bold;
+}
+
+div.ey {
+        font-family:Verdana,sans-serif;
+        position:absolute;
+        color:#336600;
+        left: -180px;
+        top: 2px;
+}
+
+.header {
+  background: #4d4128;
+  height: 100px;
+  color: #fff;
+}
+
+section {
+  font-size: 120%;
+  padding: 20px;
+  background: #fff;
+}
+
+/* Sign up button */
+
+.menu_button {
+        font-size:11px;
+        font-family:Verdana,sans-serif;
+        color:#FFFFFF;
+        height:40px;
+        background-color:#4d4128;
+        font-weight:bold;
+        padding-top:0px;
+        border:none
+}
+
+.menu_button:hover { 
+        background-color: black;
+        cursor:pointer;
+}
+
+table.polls {
+  margin-top: 1em;
+}
+
+table.polls tr {
+  border-top: 3px solid #336600;
+  height: 30px;
+}
+
+table.polls tr td.poll {
+  color:#336600;
+  vertical-align: top;
+  padding-top: 10px;
+}
+
+table.polls tr td.poll span.content {
+        font-style: bold;
+}
+
+table.polls tr td.poll span.timestamp {
+  display: block;
+  font-size: 85%;
+  color: #666;
+}
+

@@ -1,0 +1,92 @@
+Oct 18 14:31:45 beagleboard daemon.info avahi-daemon[1014]: Server startup complete. Host name is beagleboard.local. Local service cookie is 2765731642.
+Oct 18 14:31:45 beagleboard daemon.info avahi-daemon[1014]: Service "beagleboard" (/etc/avahi/services/ssh.service) successfully established.
+Oct 18 14:31:45 beagleboard daemon.info avahi-daemon[1014]: Service "SFTP File Transfer on beagleboard" (/etc/avahi/services/sftp-ssh.service) successfully established.
+Oct 18 14:31:45 beagleboard daemon.notice NetworkManager: <info>  starting...
+Oct 18 14:31:45 beagleboard daemon.notice NetworkManager: <info>  Trying to start the modem-manager...
+Oct 18 14:31:45 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: init!
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: update_system_hostname
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPluginIfupdown: guessed connection type (wlan0) = 802-11-wireless
+Oct 18 14:31:46 beagleboard user.info kernel: [   52.683258] CMEMK module: built on Mar 18 2010 at 13:19:12
+Oct 18 14:31:46 beagleboard user.info kernel: [   52.689331]   Reference Linux version 2.6.32
+Oct 18 14:31:46 beagleboard user.info kernel: [   52.693664]   File /OE/angstrom-dev/work/beagleboard-angstrom-linux-gnueabi/ti-linuxutils-1_2_25_01_06-r67c/linuxutils_2_25_01_06/packages/ti/sdo/linuxutils/cmem/src/module/cmemk.c
+Oct 18 14:31:46 beagleboard user.warn kernel: [   52.717041] CMEM Range Overlaps Kernel Physical - allowing overlap
+Oct 18 14:31:46 beagleboard user.warn kernel: [   52.734130] CMEM phys_start (0x86300000) overlaps kernel (0x80000000 -> 0x90000000)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: update_connection_setting_from_if_block: name:wlan0, type:802-11-wireless, id:Ifupdown (wlan0), uuid: 5391eba4-6426-faca-338e-5828034ff9d1
+Oct 18 14:31:46 beagleboard user.err kernel: [   52.743743] CMEMK Error: Failed to request_mem_region(0x86300000, 16777216)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: update wireless settings (wlan0).
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: wireless setting key: (null)='TING'
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: update wireless security settings (wlan0).
+Oct 18 14:31:46 beagleboard daemon.warn NetworkManager: no (wireless) mapping found for key: wireless-essid
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: addresses count: 1
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: No dns-nameserver configured in /etc/network/interfaces
+Oct 18 14:31:46 beagleboard daemon.warn NetworkManager: nm-ifupdown-connection.c.119 - invalid connection read from /etc/network/interfaces: (2) ssid
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPluginIfupdown: management mode: managed
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: devices added (path: /sys/devices/platform/ehci-omap.0/usb2/2-2/2-2:1.0/net/wlan0, iface: wlan0)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: device added (path: /sys/devices/platform/ehci-omap.0/usb2/2-2/2-2:1.0/net/wlan0, iface: wlan0): no ifupdown configuration found.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: devices added (path: /sys/devices/virtual/net/lo, iface: lo)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: device added (path: /sys/devices/virtual/net/lo, iface: lo): no ifupdown configuration found.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: end _init.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: Loaded plugin ifupdown: (C) 2008 Canonical Ltd.  To report bugs please use the NetworkManager mailing list.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: Loaded plugin keyfile: (c) 2007 - 2008 Red Hat, Inc.  To report bugs please use the NetworkManager mailing list.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  Found wlan radio killswitch rfkill0 (at /sys/devices/platform/ehci-omap.0/usb2/2-2/2-2:1.0/ieee80211/phy0/rfkill0) (driver <unknown>)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  WiFi enabled by radio killswitch; enabled by state file
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  WWAN enabled by radio killswitch; enabled by state file
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: (746832) ... get_connections.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: (746832) connections count: 0
+Oct 18 14:31:46 beagleboard user.alert kernel: [   52.897399] DSPLINK Module (1.64) created on Date: Mar 18 2010 Time: 13:22:42
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): driver supports SSID scans (scan_capa 0x01).
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): new 802.11 WiFi device (driver: 'zd1211rw')
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): exported as /org/freedesktop/NetworkManager/Devices/0
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): now managed
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): device state change: 1 -> 2 (reason 2)
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): bringing up device.
+Oct 18 14:31:46 beagleboard user.info kernel: [   52.945098] usb 2-2: firmware: requesting zd1211/zd1211b_ub
+Oct 18 14:31:46 beagleboard user.info kernel: [   52.984436] usb 2-2: firmware: requesting zd1211/zd1211b_uphr
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.109863] SDMAK module: built on Mar 18 2010 at 13:19:31
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.116485]   Reference Linux version 2.6.32
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.122680]   File /OE/angstrom-dev/work/beagleboard-angstrom-linux-gnueabi/ti-linuxutils-1_2_25_01_06-r67c/linuxutils_2_25_01_06/packages/ti/sdo/linuxutils/sdma/src/module/sdmak.c
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.280761] zd1211rw 2-2:1.0: firmware version 4725
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.338592] zd1211rw 2-2:1.0: zd1211b chip 0ace:1215 v4810 high 00-1f-35 AL2230_RF pa0 g--NS
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.373931] cfg80211: Calling CRDA for country: US
+Oct 18 14:31:46 beagleboard user.info kernel: [   53.476379] ADDRCONF(NETDEV_UP): wlan0: link is not ready
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): preparing device.
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  (wlan0): deactivating device (reason: 2).
+Oct 18 14:31:46 beagleboard daemon.err NetworkManager: supplicant_interface_acquire: assertion `mgr_state == NM_SUPPLICANT_MANAGER_STATE_IDLE' failed
+Oct 18 14:31:46 beagleboard daemon.warn NetworkManager: <WARN>  default_adapter_cb(): bluez error getting default adapter: The name org.bluez was not provided by any .service files
+Oct 18 14:31:46 beagleboard daemon.notice NetworkManager: <info>  Trying to start the supplicant...
+Oct 18 14:31:47 beagleboard user.warn kernel: [   54.218902] PVRSRV_PIXEL_FORMAT_ARGB8888
+Oct 18 14:31:48 beagleboard user.warn kernel: [   55.285217] g_cdc gadget: using random self ethernet address
+Oct 18 14:31:48 beagleboard user.warn kernel: [   55.291625] g_cdc gadget: using random host ethernet address
+Oct 18 14:31:48 beagleboard user.info kernel: [   55.311096] usb0: MAC 52:75:33:43:01:2f
+Oct 18 14:31:48 beagleboard user.info kernel: [   55.320312] usb0: HOST MAC 36:7b:2f:12:e9:0c
+Oct 18 14:31:48 beagleboard user.info kernel: [   55.344268] g_cdc gadget: CDC Composite Gadget, version: King Kamehameha Day 2008
+Oct 18 14:31:48 beagleboard user.info kernel: [   55.374816] g_cdc gadget: g_cdc ready
+Oct 18 14:31:48 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: devices added (path: /sys/devices/platform/musb_hdrc/gadget/net/usb0, iface: usb0)
+Oct 18 14:31:48 beagleboard daemon.notice NetworkManager:    SCPlugin-Ifupdown: device added (path: /sys/devices/platform/musb_hdrc/gadget/net/usb0, iface: usb0): no ifupdown configuration found.
+Oct 18 14:31:48 beagleboard daemon.warn NetworkManager: <WARN>  device_creator(): /sys/devices/platform/musb_hdrc/gadget/net/usb0: couldn't determine device driver; ignoring...
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Joining mDNS multicast group on interface wlan0.IPv4 with address 10.10.10.1.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: New relevant interface wlan0.IPv4 for mDNS.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Registering new address record for 10.10.10.1 on wlan0.IPv4.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Withdrawing address record for 10.10.10.1 on wlan0.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Leaving mDNS multicast group on interface wlan0.IPv4 with address 10.10.10.1.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Interface wlan0.IPv4 no longer relevant for mDNS.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Joining mDNS multicast group on interface wlan0.IPv4 with address 10.10.10.1.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: New relevant interface wlan0.IPv4 for mDNS.
+Oct 18 14:31:48 beagleboard daemon.info avahi-daemon[1014]: Registering new address record for 10.10.10.1 on wlan0.IPv4.
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.925537] wlan0: direct probe to AP 00:80:48:65:a3:d6 (try 1)
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.930633] wlan0: direct probe responded
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.930664] wlan0: authenticate with AP 00:80:48:65:a3:d6 (try 1)
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.932220] wlan0: authenticated
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.932342] wlan0: associate with AP 00:80:48:65:a3:d6 (try 1)
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.934722] wlan0: RX AssocResp from 00:80:48:65:a3:d6 (capab=0x421 status=0 aid=1)
+Oct 18 14:31:50 beagleboard user.debug kernel: [   56.934753] wlan0: associated
+Oct 18 14:31:50 beagleboard user.info kernel: [   56.935943] ADDRCONF(NETDEV_CHANGE): wlan0: link becomes ready
+Oct 18 14:31:59 beagleboard daemon.info avahi-daemon[1014]: Registering new address record for fe80::21f:35ff:fe00:4ba9 on wlan0.*.
+Oct 18 14:32:08 beagleboard user.debug kernel: [   67.695068] wlan0: no IPv6 routers present
+Oct 18 14:32:09 beagleboard user.err pulseaudio[1327]: module.c: Failed to open module "module-x11-publish": file not found
+Oct 18 14:32:09 beagleboard auth.notice gnome-keyring-daemon[1335]: couldn't set environment variable in session: The name org.gnome.SessionManager was not provided by any .service files
+Oct 18 14:33:47 beagleboard daemon.notice NetworkManager: <info>  Trying to start the supplicant...
+Oct 18 14:34:16 beagleboard authpriv.info dropbear[1343]: Child connection from 10.20.1.1:38817
+Oct 18 14:35:39 beagleboard authpriv.info dropbear[1343]: exit after auth (root): Disconnect received
+Oct 18 14:35:47 beagleboard daemon.notice NetworkManager: <info>  Trying to start the supplicant...
+Oct 18 14:35:59 beagleboard authpriv.info dropbear[1359]: Child connection from 10.20.1.1:38818

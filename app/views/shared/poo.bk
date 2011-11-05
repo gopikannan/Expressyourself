@@ -1,0 +1,230 @@
+<script src="raphael.js"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script type ="text/javascript">
+	
+	var geocoder;
+	var address;
+	var country;
+/*
+  	if (navigator.geolocation) {
+    		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+	}	 
+//Get latitude and longitude;
+	function successFunction(position) {
+    		var lat = position.coords.latitude;
+    		var lng = position.coords.longitude;
+    		getAddress(lat, lng)
+	}
+	function errorFunction(){
+	
+	}
+
+	function initialize() {
+    		geocoder = new google.maps.Geocoder();
+  	}
+
+	function getAddress(lat, lng) {
+
+    		var latlng = new google.maps.LatLng(lat, lng);
+    		geocoder.geocode({'latLng': latlng}, function(results, status) {
+      		if (status == google.maps.GeocoderStatus.OK) {
+        		if (results[1]) {
+				address = results[0].formatted_address;
+             			for (var i=0; i<results[0].address_components.length; i++) {
+            				for (var j=0;j<results[0].address_components[i].types.length;j++) {
+                				if (results[0].address_components[i].types[j] == "country") {
+                    					country= results[0].address_components[i].long_name;
+							break;
+                				}
+            				}
+        			}
+			} else {
+ 			         alert("No results found");
+        		  }
+      		} else {
+        		alert("Geocoder failed due to: " + status);
+      		}
+    	        });
+  	}
+
+        var lastpointX = 0;
+        var lastpointY;
+        var segmentY;
+        var segmentX;
+        var zero;
+        var prev_line_drawn = 1;
+
+        function drawSlowline(startX,endX,segmentX,startY,endY,segmentY,dir){
+                if( dir == 1 && endY >= startY)
+                        return;
+                if(dir == -1 && endY <=startY)
+                        return;
+                if(!dir && startX >= endX)
+                        return;
+
+                var endpX = startX + segmentX;
+                var endpY = startY + segmentY;
+                if(startX >=0 && startY >=0){
+                        var tetronimo = canvas.path("M"+" "+ startX+" "+startY+" L "+endpX+" "+endpY);  
+                        tetronimo.attr({fill: 'green', stroke: 'green', 'stroke-width': 2});  
+                }
+                startX=endpX;
+                startY=endpY;
+                setTimeout(function(){drawSlowline(startX,endX,segmentX,startY,endY,segmentY)},1);				
+        }
+
+        function updateCanvas(valY){
+                var delay = 100;
+                var endX = lastpointX + segmentX;
+                var endY = zero - (valY*segmentY);
+                var segY =(endY - lastpointY)/delay;
+                var segX = segmentX/delay;
+                var dir = 0;
+
+                if(endY < lastpointY )
+                        dir = 1;
+                else if(endY > lastpointY)
+                        dir = -1;
+                if(prev_line_drawn){
+                        prev_line_drawn =0;
+                        drawSlowline(lastpointX,endX,segX,lastpointY,endY,segY,dir);
+                        prev_line_drawn =1;	
+                }	
+
+                lastpointX=endX;
+                lastpointY=endY;	
+        }
+
+        function update() {
+                $.ajax({
+                        type: 'POST',
+                        url: 'polls/update',
+                        dataType: 'json',
+                        data: {poll_id: <%= @poll.id %>},
+                        success: function(json, status, xhr){
+                        updateCanvas(json.message);
+                        }
+                        });
+        }
+
+        $(document).ready(function () {
+        	window.onload = function () {
+			initialize();
+                        canvas= new Raphael(document.getElementById('canvas_container'), document.getElementById('main').Width, 500);
+                        $.ajax({
+                                type: 'POST',
+                                url: 'polls/blob',
+                                dataType: 'json',
+                                data: {poll_id: <%= @poll.id %>},
+                                success: function(json, status, xhr){
+        
+                                var splitted = json.message.split(","); 
+
+                                var maxY =150;
+                                var minY = -150;
+                                var numvaluesY = splitted.length;			
+
+
+                                rangeY = Math.abs(maxY)+Math.abs(minY);
+                                segmentY = canvas.height/rangeY;
+                                zero = canvas.height/2;	
+
+                                var timeline = 2*3600;
+                                var interval = 20 ;  // in seconds
+                                var numpointsX = timeline/interval;
+                                 segmentX = canvas.width/numpointsX;
+
+
+                                var prevpoint=zero;
+                                var prevX=0;
+                                var prevY = zero;
+                                var endY =0;
+                                
+
+                                for (var i=0;i<numvaluesY;i++){	
+                                        var valY = splitted[i];	
+                                        endY = zero - (valY * segmentY);
+                                        endX = prevX+segmentX
+                                         var tetronimo = canvas.path("M"+" "+ prevX+" "+prevY+" L "+endX+" "+endY);  
+                                        tetronimo.attr({fill: 'green', stroke: 'green', 'stroke-width': 2});  0
+                                        prevX = endX;
+                                        prevY=endY;
+                                }
+                                lastpointX = prevX;
+                                lastpointY = endY;
+                                }
+                        });
+	                setInterval(function(){update()},10000);
+
+                        };
+                        });
+			function onSubmit(opt){
+				$.ajax({
+                        		type: 'POST',
+                        		url: 'clicks',
+                        		data: {poll_id: <%= @poll.id %>,
+					       option:opt,
+					       loc:address,
+					       country:country },
+					success:function(data, textStatus) {
+						document.getElementById("messages").innerHTML="<p style='color:red'>Thanks Buddy !! </p>";
+    					},
+    					error:function(request, textStatus, errorThrown) {
+						document.getElementById("messages").innerHTML="<p style='color:red'>Chill Buddy !!  Get some fresh air </p>";
+					}
+                        	});
+
+			}
+			var countryclickdata;	
+		        function getmap(){	
+				$.ajax({
+                        		type: 'GET',
+                        		url: 'clicks/getcountryclicks.js',
+                        		data: {poll_id: <%= @poll.id %>},
+					success:function(data, textStatus) {
+						countryclickdata = data;
+						createmap();
+					//	google.load('visualization', '1', {'packages': ['geomap']});
+   					//	google.setOnLoadCallback(drawmap);
+					},
+    					error:function(request, textStatus, errorThrown) {
+						document.getElementById("messages").innerHTML="<p style='color:red'>Chill Buddy !!  Get some fresh air </p>";
+					}
+                        	});
+				
+			}*/
+			function createmap(){
+						alert("by");
+						google.load('visualization', '1', {'packages': ['geomap']});
+   						google.setOnLoadCallback(drawmap);
+			}
+			function drawmap(){
+				alert("bye");
+				var data = new google.visualization.DataTable();
+      				data.addRows(6);
+				data.addColumn('string', 'Country');
+      				data.addColumn('number', 'clicks');
+			/*	var cclick = JSON.parse(countryclickdata);
+				var i;
+				for(i = 0;i<cclick.length;i++){
+					alert(cclick[i].country);
+					data.setValue(i,0,cclick[i].country);
+					data.setValue(i,1,cclick[i].clicks);	
+				}*/	
+				var options = {};
+     				options['dataMode'] = 'regions';
+      				var container = document.getElementById('map_container');
+			        var geomap = new google.visualization.GeoMap(container);
+     				geomap.draw(data, options);		
+			}
+                </script>
+<div id = "canvas_container" ></div>
+<h1 class = "question" > <%= @poll.question %> </h1>
+<div id = 'data_set'></div>
+<input type="button" value = "<%= @poll.option1 %>" id ="option1" onclick="onSubmit(1)">
+<input type="button" value = "<%= @poll.option2 %>" id ="option2" onclick="onSubmit(2)">
+<input type="button" value = "Our world" id ="option2" onclick="createmap()">
+<div id = "messages"></div>
+<div id = "map_container" ></div>
+ 

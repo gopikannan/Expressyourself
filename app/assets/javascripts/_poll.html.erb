@@ -1,0 +1,123 @@
+<script src="raphael.js"></script>
+<script type ="text/javascript">
+
+        var lastpointX = 0;
+        var lastpointY;
+        var segmentY;
+        var segmentX;
+        var zero;
+        var prev_line_drawn = 1;
+
+        function drawSlowline(startX,endX,segmentX,startY,endY,segmentY,dir){
+                if( dir == 1 && endY >= startY)
+                        return;
+                if(dir == -1 && endY <=startY)
+                        return;
+                if(!dir && startX >= endX)
+                        return;
+
+                var canvas=document.getElementById("myCanvas");
+                var context=canvas.getContext("2d");
+                context.moveTo(startX,startY);
+                startX += segmentX;
+                startY += segmentY;
+                if(startX >=0 && startY >=0){
+                        context.lineTo(startX,startY);
+                        context.strokeStyle="green";
+                        context.stroke();
+                }
+                setTimeout(function(){drawSlowline(startX,endX,segmentX,startY,endY,segmentY)},1);				
+        }
+
+        function updateCanvas(valY){
+                var delay = 1000;
+                var endX = lastpointX + segmentX;
+                var endY = zero - (valY*segmentY);
+                var segY =(endY - lastpointY)/delay;
+                var segX = segmentX/delay;
+                var dir = 0;
+
+                if(endY < lastpointY )
+                        dir = 1;
+                else if(endY > lastpointY)
+                        dir = -1;
+
+		var tetronimo = canvas.path("M"+" "+ lastpointX+" "+lastpointY+" L "+endpX+" "+endpY);  
+    		tetronimo.attr({fill: 'black', stroke: 'black', 'stroke-width': 2});  
+                
+
+                lastpointX=endX;
+                lastpointY=endY;	
+        }
+
+        function update() {
+                $.ajax({
+                        type: 'POST',
+                        url: 'polls/update',
+                        dataType: 'json',
+                        data: {poll_id: <%= @poll.id %>},
+                        success: function(json, status, xhr){
+                        document.getElementById('data_set').innerHTML += "," + json.message;
+                        updateCanvas(json.message);
+                        }
+                        });
+        }
+
+        $(document).ready(function () {
+                        window.onload = function () {
+                        canvas= new Raphael(document.getElementById('canvas_container'), window.innerWidth, window.innerHeight);
+                        $.ajax({
+                                type: 'POST',
+                                url: 'polls/blob',
+                                dataType: 'json',
+                                data: {poll_id: <%= @poll.id %>},
+                                success: function(json, status, xhr){
+                                document.getElementById('data_set').innerHTML = json.message;
+        
+                                var splitted = json.message.split(","); 
+
+                                var maxY =150;
+                                var minY = -150;
+                                var numvaluesY = splitted.length;			
+
+
+                                rangeY = Math.abs(maxY)+Math.abs(minY);
+                                segmentY = canvas.height/rangeY;
+                                zero = canvas.height/2;	
+
+                                var timeline = 2*3600;
+                                var interval = 20 ;  // in seconds
+                                var numpointsX = timeline/interval;
+                                 segmentX = canvas.width/numpointsX;
+
+
+                                var prevpoint=zero;
+                                var prevX=0;
+                                var prevY = zero;
+                                var endY =0;
+                                
+
+                                for (var i=0;i<numvaluesY;i++){	
+                                        var valY = splitted[i];	
+                                        endY = zero - (valY * segmentY);
+                                        endX = prevX+segmentX
+                                         var tetronimo = canvas.path("M"+" "+ prevX+" "+prevY+" L "+endX+" "+endY);  
+                                        tetronimo.attr({fill: 'black', stroke: 'black', 'stroke-width': 2});  0
+                                        prevX = endX;
+                                        prevY=endY;
+                                }
+                                lastpointX = prevX;
+                                lastpointY = endY;
+                                }
+                        });
+	                setInterval(function(){update()},10000);
+
+                        };
+                        });
+
+</script>
+<div> <%= @poll.question %> </div>
+<div id = 'data_set'></div>
+<%= button_to @poll.option1 ,{:controller => 'clicks', :method => :post, :action => 'create', :poll_id => @poll.id, :option => 1}, {:remote => true} %>
+<%= button_to @poll.option2 , :controller => 'clicks', :action => 'create', :poll_id => @poll.id, :option => 2, :remote => :true %>
+<div id = "canvas_container"></div>

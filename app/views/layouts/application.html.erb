@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Express Yourself</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= stylesheet_link_tag    "ey" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "raphael" %>
+  <%= javascript_include_tag "highcharts" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+        <div class="container">
+                         <div class="menu">
+                                 <%= render 'layouts/header' %>
+                         </div>
+                         <section >
+                         <%= yield %>
+                         </section>
+        </div>
+
+</body>
+</html>

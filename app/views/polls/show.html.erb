@@ -1,0 +1,194 @@
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+
+<script type="text/javascript">
+                
+                        
+	var address;
+                        Highcharts.setOptions({
+                                global: {
+                                        useUTC: false
+                                }
+                        });
+                                
+                        var chart;
+                        $(document).ready(function() {
+                                chart = new Highcharts.Chart({
+                                        chart: {
+                                                renderTo: 'display',
+                                                defaultSeriesType: 'spline',
+                                                marginRight: 10,
+                                                events: {
+                                                        load: function() {
+                                
+                                                        // set up the updating of the chart each second
+                                                        var series = this.series[0];
+                                                        shift = series.data.length > 20;
+                                                        var y;
+                                                                setInterval(function() {
+                                                                        var y;
+                                                                        $.ajax({
+                                                                                type: 'POST',
+                                                                                url: 'update',
+                                                                                dataType: 'json',
+                                                                                data: {poll_id: <%= @poll.id %>},
+                                                                                success: function(json, status, xhr){
+                                                                                var x = (new Date()).getTime(), // current time
+                                                                                y = json.message;
+                                                                                shift = series.data.length > 20;
+                                                                                series.addPoint([x, y], true, shift);
+                                                                                }
+                                                                                });
+                                                                }, 10000);
+                                                        }
+                                                }
+                                        },
+                                        title: {
+                                                text:'' 
+                                        },
+                                        xAxis: {
+                                                type: 'datetime',
+                                                tickPixelInterval: 1000
+                                        },
+                                        yAxis: {
+                                                title: {
+                                                        text: 'people'
+                                                },
+                                                plotLines: [{
+                                                                   max: 1000,
+                                                                   min: -1000,
+
+                                                        value: 5,
+                                                        width: 10,
+                                                        color: '#808080'
+                                                }]
+                                        },
+                                        tooltip: {
+                                                formatter: function() {
+                                                return '<b>'+ this.series.name +'</b><br/>'+
+                                                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>'+ 
+                                                                Highcharts.numberFormat(this.y);
+                                                }
+                                        },
+                                        legend: {
+                                                enabled: false
+                                        },
+                                        exporting: {
+                                                enabled: false
+                                        },
+                                        series: [{
+                                                name: 'Random data',
+                                                data: (function() {
+                                                        // generate an array of random data
+                                                        var data = [];
+                                                                var x;
+                                                                var y;
+                                                                        $.ajax({
+                                                                                type: 'POST',
+                                                                                url: 'update',
+                                                                                dataType: 'json',
+                                                                                data: {poll_id: <%= @poll.id %>},
+                                                                                success: function(json, status, xhr){
+                                                        for (i = 0; i <= 0; i++) {
+                                                                data.push({
+                                                                        x: (new Date()).getTime(),
+                                                                        y: json.message
+                                                                });
+                                                        }
+                                                                                }
+                                                                                });
+                                                        
+                                                        return data;
+                                                })()
+                                        }]
+                                });
+                        });
+                </script>
+<script type ="text/javascript">
+	
+	var geocoder;
+	var address;
+	var country;
+
+  	if (navigator.geolocation) {
+    		navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+	}	 
+        // Get latitude and longitude;
+	function successFunction(position) {
+    		var lat = position.coords.latitude;
+    		var lng = position.coords.longitude;
+    		getAddress(lat, lng)
+	}
+	function errorFunction(){
+	
+	}
+
+	function getAddress(lat, lng) {
+
+    		var latlng = new google.maps.LatLng(lat, lng);
+    		geocoder.geocode({'latLng': latlng}, function(results, status) {
+      		if (status == google.maps.GeocoderStatus.OK) {
+        		if (results[1]) {
+				address = results[0].formatted_address;
+             			for (var i=0; i<results[0].address_components.length; i++) {
+            				for (var j=0;j<results[0].address_components[i].types.length;j++) {
+                				if (results[0].address_components[i].types[j] == "country") {
+                    					country= results[0].address_components[i].long_name;
+							break;
+                				}
+            				}
+        			}
+			} else {
+ 			         alert("No results found");
+        		  }
+      		} else {
+        		alert("Geocoder failed due to: " + status);
+      		}
+    	        });
+  	} 
+
+        function update() {
+                $.ajax({
+                        type: 'POST',
+                        url: 'update',
+                        dataType: 'json',
+                        data: {poll_id: <%= @poll.id %>},
+                        success: function(json, status, xhr){
+                        alert(json.message);
+                        }
+                        });
+        }
+
+//        $(document).ready(function () {
+                        //window.onload = function () {
+                        //update();
+	                //setInterval(function(){update()},10000);
+                        //};
+                        //});
+
+
+                function onSubmit(opt){
+				$.ajax({
+                        		type: 'POST',
+                        		url: '/clicks',
+                        		data: {poll_id: <%= @poll.id %>,
+					       option:opt,
+					       loc:address,
+					       country:country },
+					success:function(data, textStatus) {
+						document.getElementById("messages").innerHTML="<p style='color:red'>Thanks Buddy !! </p>";
+    					},
+    					error:function(request, textStatus, errorThrown) {
+						document.getElementById("messages").innerHTML="<p style='color:red'>Chill Buddy !!  Get some fresh air </p>";
+					}
+                        	});
+
+			}
+                </script>
+
+<h1 class = "question" > <%= @poll.question %> </h1>
+<div id = 'data_set'></div>
+<div id="display" style="width: 100%; height: 400px; margin: 0 auto"></div>
+<input type="button" value = "<%= @poll.option1 %>" id ="option1" onclick="onSubmit(1)">
+<input type="button" value = "<%= @poll.option2 %>" id ="option2" onclick="onSubmit(2)">
